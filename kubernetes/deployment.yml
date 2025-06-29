@@ -1,0 +1,23 @@
+# kubectl apply -f deployment.yml
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: iaconvertionllama
+  namespace: johanmalasquez
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: iaconvertionllama
+  template:
+    metadata:
+      labels:
+        app: iaconvertionllama
+    spec:
+      containers:
+      - name: iaconvertionllama
+        image: mvalerius/chatbot-v3:latest   # Reemplaza con tu imagen DockerHub
+        imagePullPolicy: IfNotPresent           # Evita bajar la imagen si ya existe
+        envFrom:
+            - secretRef:
+                name: credentials               # Cargar todo el Secret como variables de entorno
