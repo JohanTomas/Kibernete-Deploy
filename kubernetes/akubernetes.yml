@@ -1,0 +1,40 @@
+# akubernetes.yml
+
+# consultar versión de minikube
+minikube version
+
+# iniciar clúster kubernetes
+minikube start
+
+# listar namespace
+kubectl get namespace
+kubectl get ns
+
+# consultar namespace en uso por "default" | LINUX
+kubectl config view --minify | grep namespace
+
+# consultar namespace en uso por "default" | WINDOWS
+kubectl config view --minify | findstr namespace
+
+# cambiar un namespace en uso por "default" a "johanmalasquez"
+kubectl config set-context --current --namespace=johanmalasquez
+
+# consultar todos los recursos de un namespace "johanmalasquez"
+kubectl get all -n johanmalasquez
+
+# consultar todos los recursos y secret de un namespace "johanmalasquez"
+kubectl get all,secrets
+
+# listar services del namespace "johanmalasquez"
+minikube service iaconvertionllama -n johanmalasquez
+minikube service list
+
+# probar el microservicio dentro del clúster con curl
+curl http://192.168.49.2:30001/v1/api/iaconvertionllama
+curl http://192.168.49.2:30001/v1/api/iaconvertionllama/id/1
+
+# crear un túnel de puerto la máquina local (host) y el clúster de Kubernetes
+kubectl port-forward service/iaconvertionllama 8090:80
+
+# ver los logs del pod (logs del proyecto)
+kubectl logs nombre-pod
